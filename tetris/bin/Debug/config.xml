@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+  <scoreboard>
+    <user>
+      <username>John</username>
+      <score>2000</score>
+    </user>
+  </scoreboard>
+
+  <controls>
+    <left>Left</left>
+    <right>Right</right>
+    <hardDrop>Down</hardDrop>
+    <rotate>Space</rotate>
+  </controls>
+</config>
