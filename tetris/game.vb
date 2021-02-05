@@ -7,6 +7,7 @@ Public Class scoreManager
     Public Shared line2Points As Integer = 100
     Public Shared line3Points As Integer = 300
     Public Shared line4Points As Integer = 1200
+    Public Shared lineElsePoints As Integer = 1500
 
     Public Sub add(ByVal lines As Integer, ByVal level As Integer)
         Select Case lines
@@ -18,6 +19,8 @@ Public Class scoreManager
                 score += line3Points * (level + 1)
             Case 4
                 score += line4Points * (level + 1)
+            Case Else
+                score += lineElsePoints * (level + 1)
         End Select
     End Sub
 
@@ -122,8 +125,8 @@ Public Class shapeManager
     End Sub
 
     Private Sub genNewShape()
-        Console.WriteLine("Generating New Shape.")
-        shapesLibrary.Add(rng.Next(1, 7))
+        Console.WriteLine("Generating New Shape For Next Shapes.")
+        shapesLibrary.Add(rng.Next(1, 8))
     End Sub
 End Class
 
@@ -150,7 +153,7 @@ Public Class lineManager
         Next
 
         If linesComplete.Count > 0 Then
-            scoreManager.add(linesComplete, frmTetris.level)
+            scoreManager.add(linesComplete.Count, frmTetris.level)
             clearLines()
         End If
     End Sub
@@ -245,7 +248,7 @@ Public Class lineManager
             For col = minY To maxY
                 If Not grid(row, col) = 0 Then
                     shapeTemplate.Positions.Add(New Shapes.LC_Template.block With {.position = New Point(row, col), .color = grid(row, col)})
-                    If Not row = maxX Then
+                    If Not row = minY Then
                         shapeTemplate.ForbiddenIndexes.Add(shapeTemplate.Positions.Last)
                     End If
                 End If

@@ -105,7 +105,7 @@
             End Set
         End Property
 
-        Private Sub setShape(Orientation As Integer, sender As Object, e As EventArgs) Handles Me.orientationChanged
+        Public Sub setShape(Orientation As Integer, sender As Object, e As EventArgs) Handles Me.orientationChanged
             Select Case ShapeType
                 Case "I"
                     Select Case Orientation
@@ -219,7 +219,9 @@
 #Enable Warning BC42353 ' Function doesn't return a value on all code paths
 
         Public Sub addShape()
+            Console.WriteLine("Adding Shape")
             setShape(Orientation, Me, New EventArgs)
+            getShapeColor()
 
             currentOrigin = New Point(X, Y)
 
@@ -245,6 +247,7 @@
             If canAdd Then
                 Return True
             Else
+                Console.WriteLine("Cannot Add Shape.")
                 frmTetris.stopGame()
                 Return False
             End If
@@ -318,7 +321,7 @@
             forbiddenIndexes = Shape.ForbiddenIndexes("Right")
             For Each blockPosition In blockPositions
                 If Not forbiddenIndexes.Contains(blockPositions.IndexOf(blockPosition)) Then
-                    Dim newX = blockPosition.X - 1
+                    Dim newX = blockPosition.X + 1
                     Dim newY = blockPosition.Y
                     Dim maxX = frmTetris.gridColumns
 
@@ -340,8 +343,6 @@
 
         Public Sub down()
             Console.WriteLine("Moving Down")
-            Dim lastPos = blockPositions(blockPositions.Count - 1)
-            Dim newBlockPositions As New List(Of Point)
             If canMoveDown() Then
                 Console.WriteLine("True")
                 mvDown = True
@@ -351,7 +352,7 @@
             End If
 
             If mvDown Then
-                currentOrigin.Y += 1
+                currentOrigin.Y -= 1
                 drawShape()
                 getDebugInfo()
             End If
@@ -362,11 +363,11 @@
             forbiddenIndexes = Shape.ForbiddenIndexes("Down")
             For Each blockPosition In blockPositions
                 If Not forbiddenIndexes.Contains(blockPositions.IndexOf(blockPosition)) Then
-                    Dim newX = blockPosition.X - 1
-                    Dim newY = blockPosition.Y
-                    Dim maxY = frmTetris.gridRows
+                    Dim newX = blockPosition.X
+                    Dim newY = blockPosition.Y - 1
+                    Dim minY = 0
 
-                    If newY >= maxY Then
+                    If newY < minY Then
                         canMove = False
                     ElseIf Not frmTetris.grid(newX, newY) = 0 Then
                         Console.WriteLine($"Cannot Move. {blockPositions.IndexOf(blockPosition)} colliding with {findCollidingIndex(blockPositions, newX, newY)}")

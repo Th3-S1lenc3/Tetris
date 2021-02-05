@@ -41,10 +41,10 @@
     Public Class _90
         Public Shared Function Positions(ByVal origin As Point) As List(Of Point)
             Dim shape As New List(Of Point)
-            shape.Add(New Point(origin.X, origin.Y - 1))
-            shape.Add(New Point(origin.X, origin.Y))
             shape.Add(New Point(origin.X, origin.Y + 1))
-            shape.Add(New Point(origin.X, origin.Y + 2))
+            shape.Add(New Point(origin.X, origin.Y))
+            shape.Add(New Point(origin.X, origin.Y - 1))
+            shape.Add(New Point(origin.X, origin.Y - 2))
             Return shape
         End Function
 
@@ -81,9 +81,9 @@
                 Case "Down"
                     indexes = {}
                 Case "Left"
-                    indexes = {1, 2, 3}
-                Case "Right"
                     indexes = {0, 1, 2}
+                Case "Right"
+                    indexes = {1, 2, 3}
                 Case "Rotate"
                     indexes = {1}
             End Select
@@ -106,7 +106,7 @@
             Dim indexes As Integer()
             Select Case Direction
                 Case "Down"
-                    indexes = {0, 1, 2}
+                    indexes = {1, 2, 3}
                 Case "Left"
                     indexes = {}
                 Case "Right"

@@ -6,7 +6,7 @@ Public Class frmTetris
     Private cellHeight As Integer = 25
     ' Main Grid
     Public gridStart_X As Integer = 155
-    Public gridStart_Y As Integer = 120
+    Public gridStart_Y As Integer = 595
     Private grid_X As Integer
     Private grid_Y As Integer
     Public gridRows As Integer = 20
@@ -18,7 +18,7 @@ Public Class frmTetris
     Public nextShapesStart_Y = 145
     Public nextShapes_gridRows = 10
     Public nextShapes_gridColumns = 5
-    Public nextShapes_grid(nextShapes_gridColumns - 1, nextShapes_gridRows)
+    Public nextShapes_grid(nextShapes_gridColumns, nextShapes_gridRows)
     Private nextShapes_X
     Private nextShapes_Y
     Public nextShapes_gridPainted As Boolean = False
@@ -26,18 +26,20 @@ Public Class frmTetris
     Public level As Integer = 1
     Private gamePaused As Boolean = False
     Private gameStarted As Boolean = False
-    Public spawnX As Integer = 5
-    Public spawnY As Integer = 1
+    Public spawnX As Integer = 4
+    Public spawnY As Integer = 18
     Public activeShape
     Private nextShape
     Private debug As Boolean = True
-    Private Event shapeInvalidated(sender As Object, e As EventArgs)
     ' Game Classes
     Public scoreManager As New scoreManager
     Private gameControls As New gameControls
     Private shapeManager As New shapeManager
     Private shapeTranslator As New Shapes.shapeTranslator
     Private lineManager
+    ' Event
+    Private Event shapeInvalidated(sender As Object, e As EventArgs)
+    Private Event gameStopped(sender As Object, e As EventArgs)
 
     Private Sub frmTetris_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         lineManager = New lineManager
@@ -143,7 +145,7 @@ Public Class frmTetris
                 grid_X += cellWidth
             Next
             grid_X = gridStart_X
-            grid_Y += cellHeight
+            grid_Y -= cellHeight
         Next
         Console.WriteLine()
         pen.Dispose()
@@ -187,17 +189,13 @@ Public Class frmTetris
         gridPainted = False
         Me.Invalidate()
         Dim x = 1
-        Dim y = 1
+        Dim y = 2
         Dim newShapeName
         For Each newShape In shapeManager.shapesLibrary
             newShapeName = shapeTranslator.getShapeFromIndex(newShape)
-            If newShapeName = "Shape_I" Then
-                x = 0
-            Else
-                x = 1
-            End If
             setNextShape(shapeTranslator.getShapeFromIndex(newShape), x, y)
-            nextShapePositions = nextShape.Shape.Positions(x, y)
+            nextShape.setShape(nextShape.Orientation, Me, New EventArgs)
+            nextShapePositions = nextShape.Shape.Positions(New Point(x, y))
             For Each block In nextShapePositions
                 nextShapes_grid(block.X, block.Y) = newShape
             Next
@@ -280,10 +278,13 @@ Public Class frmTetris
         lineManager.checkLines()
     End Sub
 
+    Private Sub Me_gameStopped(sender As Object, e As EventArgs) Handles Me.gameStopped
+        'Stop
+    End Sub
+
     Private Sub initGame()
         Console.WriteLine("Intializing Game")
         shapeManager.spawnNew()
-        Console.WriteLine()
     End Sub
 
     Public Sub invalidateShape()
@@ -304,6 +305,7 @@ Public Class frmTetris
         tmrMVShape.Enabled = False
         Console.WriteLine("stopGame")
         btnStartStopReset.Text = "Reset"
+        RaiseEvent gameStopped(Me, New EventArgs)
     End Sub
 
     Private Sub resetGame()

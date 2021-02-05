@@ -31,7 +31,7 @@
                 Case "Right"
                     indexes = {0, 2}
                 Case "Rotate"
-                    indexes = {0}
+                    indexes = {0, 1, 2, 3}
             End Select
 
             Return indexes
@@ -58,7 +58,7 @@
                 Case "Right"
                     indexes = {0, 2}
                 Case "Rotate"
-                    indexes = {0}
+                    indexes = {0, 1, 2, 3}
             End Select
 
             Return indexes
@@ -85,7 +85,7 @@
                 Case "Right"
                     indexes = {0, 2}
                 Case "Rotate"
-                    indexes = {0}
+                    indexes = {0, 1, 2, 3}
             End Select
 
             Return indexes
@@ -112,7 +112,7 @@
                 Case "Right"
                     indexes = {0, 2}
                 Case "Rotate"
-                    indexes = {0}
+                    indexes = {0, 1, 2, 3}
             End Select
 
             Return indexes

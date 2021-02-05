@@ -15,7 +15,7 @@
         Public Shared Function Positions(ByVal origin As Point) As List(Of Point)
             Dim shape As New List(Of Point)
             shape.Add(New Point(origin.X - 1, origin.Y + 1))
-            shape.Add(New Point(origin.X, origin.Y - 1))
+            shape.Add(New Point(origin.X, origin.Y + 1))
             shape.Add(New Point(origin.X, origin.Y))
             shape.Add(New Point(origin.X + 1, origin.Y))
             Return shape
@@ -41,7 +41,7 @@
     Public Class _90
         Public Shared Function Positions(ByVal origin As Point) As List(Of Point)
             Dim shape As New List(Of Point)
-            shape.Add(New Point(origin.X + 1, origin.Y - 1))
+            shape.Add(New Point(origin.X + 1, origin.Y + 1))
             shape.Add(New Point(origin.X + 1, origin.Y))
             shape.Add(New Point(origin.X, origin.Y))
             shape.Add(New Point(origin.X, origin.Y - 1))
@@ -98,7 +98,7 @@
             shape.Add(New Point(origin.X - 1, origin.Y - 1))
             shape.Add(New Point(origin.X - 1, origin.Y))
             shape.Add(New Point(origin.X, origin.Y))
-            shape.Add(New Point(origin.X + 1, origin.Y))
+            shape.Add(New Point(origin.X + 1, origin.Y + 1))
             Return shape
         End Function
 

@@ -31,7 +31,7 @@
                 Case "Right"
                     indexes = {2, 3}
                 Case "Rotate"
-                    indexes = {3}
+                    indexes = {2}
             End Select
 
             Return indexes
@@ -58,7 +58,7 @@
                 Case "Right"
                     indexes = {1}
                 Case "Rotate"
-                    indexes = {3}
+                    indexes = {2}
             End Select
 
             Return indexes
@@ -79,13 +79,13 @@
             Dim indexes As Integer()
             Select Case Direction
                 Case "Down"
-                    indexes = {1}
+                    indexes = {0}
                 Case "Left"
                     indexes = {2, 3}
                 Case "Right"
                     indexes = {1, 2}
                 Case "Rotate"
-                    indexes = {3}
+                    indexes = {2}
             End Select
 
             Return indexes
@@ -108,11 +108,11 @@
                 Case "Down"
                     indexes = {1, 2}
                 Case "Left"
-                    indexes = {0}
-                Case "Right"
                     indexes = {1}
+                Case "Right"
+                    indexes = {0}
                 Case "Rotate"
-                    indexes = {3}
+                    indexes = {2}
             End Select
 
             Return indexes

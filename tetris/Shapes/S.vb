@@ -31,7 +31,7 @@
                 Case "Right"
                     indexes = {0, 2}
                 Case "Rotate"
-                    indexes = {2}
+                    indexes = {1}
             End Select
 
             Return indexes
@@ -44,7 +44,7 @@
             shape.Add(New Point(origin.X, origin.Y + 1))
             shape.Add(New Point(origin.X, origin.Y))
             shape.Add(New Point(origin.X + 1, origin.Y))
-            shape.Add(New Point(origin.X + 1, origin.Y + 1))
+            shape.Add(New Point(origin.X + 1, origin.Y - 1))
             Return shape
         End Function
 
@@ -58,7 +58,7 @@
                 Case "Right"
                     indexes = {1}
                 Case "Rotate"
-                    indexes = {2}
+                    indexes = {1}
             End Select
 
             Return indexes
@@ -85,7 +85,7 @@
                 Case "Right"
                     indexes = {1, 3}
                 Case "Rotate"
-                    indexes = {2}
+                    indexes = {1}
             End Select
 
             Return indexes
@@ -112,7 +112,7 @@
                 Case "Right"
                     indexes = {2}
                 Case "Rotate"
-                    indexes = {2}
+                    indexes = {1}
             End Select
 
             Return indexes
