@@ -79,7 +79,7 @@
             Dim indexes As Integer()
             Select Case Direction
                 Case "Down"
-                    indexes = {0}
+                    indexes = {1}
                 Case "Left"
                     indexes = {2, 3}
                 Case "Right"

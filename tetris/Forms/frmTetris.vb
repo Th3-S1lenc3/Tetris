@@ -36,7 +36,7 @@ Public Class frmTetris
     Private gameControls As New gameControls
     Private shapeManager As New shapeManager
     Private shapeTranslator As New Shapes.shapeTranslator
-    Private lineManager
+    Public lineManager
     ' Event
     Private Event shapeInvalidated(sender As Object, e As EventArgs)
     Private Event gameStopped(sender As Object, e As EventArgs)

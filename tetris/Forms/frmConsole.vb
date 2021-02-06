@@ -19,11 +19,11 @@
 
     Public Sub drawGrid()
         rtbConsole.Clear()
-        For row As Integer = 0 To frmTetris.gridRows - 1
+        For row As Integer = frmTetris.gridRows - 1 To 0 Step -1
             For col As Integer = 0 To frmTetris.gridColumns - 1
                 rtbConsole.AppendText($"{frmTetris.grid(col, row)}")
             Next
-            If Not row = frmTetris.gridRows - 1 Then
+            If Not row = 0 Then
                 rtbConsole.AppendText($"{vbCrLf}")
             End If
         Next
@@ -69,8 +69,11 @@
             Case "switch"
                 switchGrid()
                 initConsole()
-            Case "generate new shapes"
+            Case "generatNewShapes"
                 frmTetris.drawNextShapesToGrid()
+                initConsole()
+            Case "checkLines"
+                frmTetris.lineManager.checkLines()
                 initConsole()
             Case "exit"
                 End

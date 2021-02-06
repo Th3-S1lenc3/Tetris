@@ -97,10 +97,16 @@
                 Return _orientation
             End Get
             Set(value As Integer)
-                If Not validOrientations.Contains(value) Then
-                    Throw New Exception("Invalid Shape")
+                If value = 360 Then
+                    value = 0
+                ElseIf value = -90 Then
+                    value = 270
                 End If
-                _orientation = value
+
+                If Not validOrientations.Contains(value) Then
+                    Throw New Exception($"Invalid Orientation: {value}")
+                End If
+                    _orientation = value
                 RaiseEvent orientationChanged(value, Me, New EventArgs)
             End Set
         End Property
@@ -411,16 +417,31 @@
 
         Private Function canRotateShape()
             canRotate = True
+            Dim oldPositions As New List(Of Point)
             Dim newPositions As List(Of Point)
+            oldPositions = blockPositions
+            Orientation += 90
             newPositions = Shape.Positions(currentOrigin)
             forbiddenIndexes = Shape.ForbiddenIndexes("Rotate")
 
+            For Each blockPosition In oldPositions
+                frmTetris.grid(blockPosition.X, blockPosition.Y) = 0
+            Next
+
             For Each position In newPositions
-                If Not forbiddenIndexes.Contains(newPositions.IndexOf(position)) Then
+                Try
                     If Not frmTetris.grid(position.X, position.Y) = 0 Then
                         canRotate = False
                     End If
-                End If
+                Catch ex As Exception
+                    canRotate = False
+                End Try
+            Next
+
+            Orientation -= 90
+
+            For Each blockPosition In oldPositions
+                frmTetris.grid(blockPosition.X, blockPosition.Y) = ShapeColor
             Next
 
             If canRotate Then
@@ -431,7 +452,7 @@
         End Function
 
         Private Sub drawShape()
-            Dim newBlockPositions As New List(Of Point)
+            Dim newBlockPositions As List(Of Point)
             newBlockPositions = Shape.Positions(currentOrigin)
 
             For Each blockPosition In blockPositions

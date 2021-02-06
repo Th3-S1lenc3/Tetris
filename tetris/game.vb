@@ -138,17 +138,21 @@ Public Class lineManager
     Private Event lineCleared(sender As Object, e As EventArgs)
 
     Public Sub checkLines()
+        Console.WriteLine("Checking Lines")
         Dim lineComplete As Boolean = True
 
-        For row As Integer = 0 To frmTetris.gridRows - 1
+        For row = 0 To frmTetris.gridRows
             For col As Integer = 0 To frmTetris.gridColumns - 1
                 If grid(col, row) = 0 Then
                     lineComplete = False
                 End If
+
+                Console.WriteLine($"Line {row}; Column {col}: {grid(col, row)}")
             Next
 
             If lineComplete Then
                 linesComplete.Add(row)
+                Console.WriteLine($"Line {row}: Complete")
             End If
         Next
 
@@ -156,16 +160,20 @@ Public Class lineManager
             scoreManager.add(linesComplete.Count, frmTetris.level)
             clearLines()
         End If
+
+        linesComplete.Clear()
     End Sub
 
     Private Sub clearLines()
+        Console.WriteLine("Clearing Lines")
         For Each line In linesComplete
             For col As Integer = 0 To frmTetris.gridColumns - 1
                 grid(col, line) = 0
             Next
         Next
-
-        RaiseEvent lineCleared(Me, New EventArgs)
+        frmTetris.gridPainted = False
+        frmTetris.Invalidate()
+        'RaiseEvent lineCleared(Me, New EventArgs)
     End Sub
 
     Private Sub checkForFloatingShape(sender As Object, e As EventArgs) Handles Me.lineCleared
